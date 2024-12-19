@@ -1,4 +1,6 @@
 import express, { Application, Request, Response } from 'express';
+import globalErrorHandler from './app/middlewares/globalErrorhandler';
+import notFound from './app/middlewares/notFound';
 
 const app: Application = express();
 //Middleware to parse incoming JSON request
@@ -18,12 +20,9 @@ app.get('/', (req: Request, res: Response) => {
   });
 });
 
-//Fallback Route: hadle all undefined routes
-app.all('*', (req: Request, res: Response) => {
-  res.status(400).json({
-    success: false,
-    message: 'Route is not Found',
-  });
-});
+// Use the Not Found Middleware
+app.use(notFound);
+// Use the Global Error Handler
+app.use(globalErrorHandler);
 
 export default app;
