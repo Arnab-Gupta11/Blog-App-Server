@@ -15,7 +15,7 @@ const createBlogIntoDB = async (payload: TBlog) => {
 
 //Get All blog from DB
 const getAllCourseFromDB = async (query: Record<string, unknown>) => {
-  const blogQuery = new QueryBuilder(Blog.find(), query)
+  const blogQuery = new QueryBuilder(Blog.find().populate('author'), query)
     .search(searchableFields)
     .filter()
     .sort()
@@ -46,7 +46,7 @@ const deleteBlogFromDB = async (id: string) => {
   if (!isBlogExist) {
     throw new AppError(404, 'The requested blog post does not exist.');
   }
-  //Update blog.
+  //Delete blog.
   const result = await Blog.findByIdAndDelete(id);
   return result;
 };

@@ -19,9 +19,9 @@ const createBlog = catchAsync(async (req: Request, res: Response) => {
 const getAllBlogs = catchAsync(async (req: Request, res: Response) => {
   const result = await BlogServices.getAllCourseFromDB(req.query);
   sendResponse(res, {
-    statusCode: 201,
+    statusCode: 200,
     success: true,
-    message: 'Blog created successfully',
+    message: 'Blogs fetched successfully',
     data: result,
   });
 });

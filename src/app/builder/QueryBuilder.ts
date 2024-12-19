@@ -38,6 +38,7 @@ class QueryBuilder<T> {
 
     return this;
   }
+  //Sort by order
   sortOrder() {
     const sortOrder = this?.query?.sortOrder;
     if (sortOrder === 'asc') {
