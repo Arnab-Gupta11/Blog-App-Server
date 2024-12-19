@@ -7,4 +7,5 @@ export const config = {
   mongo_uri: process.env.MONGO_URI,
   port: process.env.PORT,
   node_env: process.env.NODE_ENV,
+  bcrypt_salt_rounds: process.env.BCRYPT_SALT_ROUNDS,
 };
