@@ -13,6 +13,27 @@ const registerUser = catchAsync(async (req: Request, res: Response) => {
     data: { _id, name, email },
   });
 });
+
+//Login User
+const loginUser = catchAsync(async (req, res) => {
+  const result = await AuthServices.loginUser(req.body);
+  const { accessToken } = result;
+
+  // res.cookie('refreshToken', refreshToken, {
+  //   secure: config.NODE_ENV === 'production',
+  //   httpOnly: true,
+  // });
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'User is logged in succesfully!',
+    data: {
+      accessToken,
+    },
+  });
+});
 export const AuthControllers = {
   registerUser,
+  loginUser,
 };
