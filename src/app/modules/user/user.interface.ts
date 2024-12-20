@@ -1,7 +1,9 @@
 /* eslint-disable no-unused-vars */
-import { Model } from 'mongoose';
+import { Model, ObjectId } from 'mongoose';
+import { USER_ROLE } from './user.constant';
 
 export interface IUser {
+  _id: ObjectId;
   name: string;
   email: string;
   password: string;
@@ -9,6 +11,7 @@ export interface IUser {
   isBlocked: boolean;
 }
 
+//Interface for Static method.
 export interface UserModel extends Model<IUser> {
   //instance methods for checking if the user exist
   isUserExistsByEmail(id: string): Promise<IUser>;
@@ -18,3 +21,6 @@ export interface UserModel extends Model<IUser> {
     hashedPassword: string,
   ): Promise<boolean>;
 }
+
+//Interface for user role
+export type TUserRole = keyof typeof USER_ROLE;

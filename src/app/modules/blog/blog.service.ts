@@ -1,3 +1,4 @@
+import { JwtPayload } from 'jsonwebtoken';
 import QueryBuilder from '../../builder/QueryBuilder';
 import AppError from '../../errors/AppError';
 import { searchableFields } from './blog.constant';
@@ -5,7 +6,8 @@ import { TBlog } from './blog.interface';
 import { Blog } from './blog.model';
 
 //Create a blog into DB
-const createBlogIntoDB = async (payload: TBlog) => {
+const createBlogIntoDB = async (user: JwtPayload, payload: TBlog) => {
+  payload.author = user._id;
   const result = (await Blog.create(payload)).populate(
     'author',
     'name email role',

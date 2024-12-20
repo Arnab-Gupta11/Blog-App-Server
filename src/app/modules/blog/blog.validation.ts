@@ -12,12 +12,13 @@ const createBlogValidationSchema = z.object({
         required_error: 'Content is required',
       })
       .min(1, 'Content cannot be empty'),
-    author: z
-      .string({
-        required_error: 'Author ID is required',
-      })
-      .regex(/^[0-9a-fA-F]{24}$/, 'Invalid author ID format'),
-    isPublished: z.boolean().optional(),
+    // author: z
+    //   .string({
+    //     required_error: 'Author ID is required',
+    //   })
+    //   .regex(/^[0-9a-fA-F]{24}$/, 'Invalid author ID format')
+    //   .optional(),
+    // isPublished: z.boolean().optional(),
   }),
 });
 const updateBlogValidationSchema = z.object({
