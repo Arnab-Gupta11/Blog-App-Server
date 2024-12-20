@@ -27,12 +27,25 @@ const getAllCourseFromDB = async (query: Record<string, unknown>) => {
 };
 
 //Update a blog into DB
-const updateBlogIntoDB = async (id: string, payload: Partial<TBlog>) => {
+const updateBlogIntoDB = async (
+  id: string,
+  user: JwtPayload,
+  payload: Partial<TBlog>,
+) => {
   //Check If the blog exist.
-  const isBlogExist = await Blog.findById(id);
+  const isBlogExist = await Blog.findById(id).populate('author');
   if (!isBlogExist) {
     throw new AppError(404, 'The requested blog post does not exist.');
   }
+  // Type assertion or check to ensure login user is author.
+  let authorEmail;
+  if ('email' in isBlogExist.author) {
+    authorEmail = isBlogExist.author.email;
+  }
+  if (authorEmail !== user.userEmail) {
+    throw new AppError(403, 'You are not authorized to update this blog.');
+  }
+
   //Update blog.
   const result = await Blog.findByIdAndUpdate(id, payload, {
     new: true,
@@ -42,11 +55,19 @@ const updateBlogIntoDB = async (id: string, payload: Partial<TBlog>) => {
 };
 
 //Delete a blog From DB
-const deleteBlogFromDB = async (id: string) => {
+const deleteBlogFromDB = async (id: string, user: JwtPayload) => {
   //Check If the blog exist.
-  const isBlogExist = await Blog.findById(id);
+  const isBlogExist = await Blog.findById(id).populate('author');
   if (!isBlogExist) {
     throw new AppError(404, 'The requested blog post does not exist.');
+  }
+  // Type assertion or check to ensure login user is author.
+  let authorEmail;
+  if ('email' in isBlogExist.author) {
+    authorEmail = isBlogExist.author.email;
+  }
+  if (authorEmail !== user?.userEmail) {
+    throw new AppError(403, 'You are not authorized to delete this blog.');
   }
   //Delete blog.
   const result = await Blog.findByIdAndDelete(id);

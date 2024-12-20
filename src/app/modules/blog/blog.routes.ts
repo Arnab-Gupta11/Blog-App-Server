@@ -17,8 +17,9 @@ router
 router
   .route('/:id')
   .patch(
+    auth('user'),
     validateRequest(BlogValidations.updateBlogValidationSchema),
     BlogControllers.updateBlog,
   )
-  .delete(BlogControllers.deleteBlog);
+  .delete(auth('user'), BlogControllers.deleteBlog);
 export const BlogRoutes = router;

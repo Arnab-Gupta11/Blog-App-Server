@@ -29,7 +29,7 @@ const getAllBlogs = catchAsync(async (req: Request, res: Response) => {
 //Update a blog
 const updateBlog = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
-  const result = await BlogServices.updateBlogIntoDB(id, req.body);
+  const result = await BlogServices.updateBlogIntoDB(id, req.user, req.body);
   if (result) {
     const { _id, title, content, author } = result;
     sendResponse(res, {
@@ -44,7 +44,7 @@ const updateBlog = catchAsync(async (req: Request, res: Response) => {
 //Delete a blog
 const deleteBlog = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
-  const result = await BlogServices.deleteBlogFromDB(id);
+  const result = await BlogServices.deleteBlogFromDB(id, req.user);
   if (result) {
     res.status(200).json({
       success: true,
