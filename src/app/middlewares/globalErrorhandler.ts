@@ -1,3 +1,4 @@
+// import jwt from 'jsonwebtoken';
 /* eslint-disable no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { ErrorRequestHandler } from 'express';
@@ -41,6 +42,24 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
     statusCode = simplifiedError?.statusCode;
     message = simplifiedError?.message;
     errorSources = simplifiedError?.errorSources;
+  } else if (err.name === 'TokenExpiredError') {
+    statusCode = 401;
+    message = 'Session has expired. Please log in again.';
+    errorSources = [
+      {
+        path: 'token',
+        message: 'The provided token has expired.',
+      },
+    ];
+  } else if (err?.name === 'JsonWebTokenError') {
+    statusCode = 401;
+    message = 'Invalid token. Authentication failed.';
+    errorSources = [
+      {
+        path: 'token',
+        message: 'The provided token is invalid.',
+      },
+    ];
   } else if (err instanceof AppError) {
     statusCode = err?.statusCode;
     message = err.message;
@@ -66,7 +85,7 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
     message,
     statusCode,
     error: { details: errorSources },
-    stack: config.node_env === 'development' ? err?.stack : null,
+    stack: err?.stack,
   });
 };
 
