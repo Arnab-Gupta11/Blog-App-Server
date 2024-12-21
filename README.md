@@ -117,7 +117,7 @@ Ensure you have the following installed:
 
 ```bash
 https://github.com/Arnab-Gupta11/Blog-App-Server.git
-cd stationery-shop-management
+cd Blog-App-Server
 ```
 
 ### **Install Dependencies**
@@ -131,7 +131,7 @@ npm install
 Create a `.env` file in the project root and configure the following variables:
 
 ```env
-MONGO_URI=mongodb+srv://<your_mongo_user>:<your_mongo_password>@<your_mongo_cluster>/stationaryShopDB?retryWrites=true&w=majority
+MONGO_URI=mongodb+srv://<your_mongo_user>:<your_mongo_password>@<your_mongo_cluster>/blogAppDB?retryWrites=true&w=majority
 PORT=5000
 ```
 
