@@ -17,7 +17,7 @@ const loginUser = async (payload: TLoginUser) => {
   const user = await User.isUserExistsByEmail(payload.email);
 
   if (!user) {
-    throw new AppError(404, 'This user is not found !');
+    throw new AppError(401, 'Invalid credentials');
   }
 
   // checking if the user is blocked
@@ -31,7 +31,7 @@ const loginUser = async (payload: TLoginUser) => {
   //checking if the password is correct
 
   if (!(await User.isPasswordMatched(payload?.password, user?.password)))
-    throw new AppError(403, 'Password do not matched');
+    throw new AppError(401, 'Invalid credentials');
 
   //create token and sent to the  client
 
@@ -46,12 +46,6 @@ const loginUser = async (payload: TLoginUser) => {
     config.jwt_access_secret as string,
     config.jwt_access_expires_in as string,
   );
-
-  // const refreshToken = createToken(
-  //   jwtPayload,
-  //   config.jwt_refresh_secret as string,
-  //   config.jwt_refresh_expires_in as string,
-  // );
 
   return {
     accessToken,

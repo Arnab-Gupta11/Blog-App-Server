@@ -62,6 +62,10 @@ A RESTful Express application built with MongoDB, Mongoose, and TypeScript for m
 
 ---
 
+## Live Site: https://blog-project-server-six-roan.vercel.app/
+
+---
+
 ## 📂 **Project Structure**
 
 ```plaintext
@@ -133,6 +137,9 @@ Create a `.env` file in the project root and configure the following variables:
 ```env
 MONGO_URI=mongodb+srv://<your_mongo_user>:<your_mongo_password>@<your_mongo_cluster>/blogAppDB?retryWrites=true&w=majority
 PORT=5000
+BCRYPT_SALT_ROUNDS=<your_salt_rounds>
+JWT_ACCESS_SECRET=<your_jwt_access_secret>
+JWT_ACCESS_EXPIRES_IN=<expiry_time>
 ```
 
 ### **Build the Project**
@@ -168,24 +175,27 @@ http://localhost:5000
 ## 🔧 API Endpoints
 
 ### Authentication
-| Method | Endpoint               | Description                          |
-|--------|------------------------|--------------------------------------|
-| POST   | /api/auth/register      | Register a new user.                |
-| POST   | /api/auth/login         | Login with email and password.      |
+
+| Method | Endpoint           | Description                    |
+| ------ | ------------------ | ------------------------------ |
+| POST   | /api/auth/register | Register a new user.           |
+| POST   | /api/auth/login    | Login with email and password. |
 
 ### Blog Management
-| Method | Endpoint               | Description                          |
-|--------|------------------------|--------------------------------------|
-| POST   | /api/blogs              | Create a new blog.                  |
-| PATCH  | /api/blogs/:id          | Update an existing blog.            |
-| DELETE | /api/blogs/:id          | Delete a blog.                      |
-| GET    | /api/blogs              | Retrieve all blogs (public).        |
+
+| Method | Endpoint       | Description                  |
+| ------ | -------------- | ---------------------------- |
+| POST   | /api/blogs     | Create a new blog.           |
+| PATCH  | /api/blogs/:id | Update an existing blog.     |
+| DELETE | /api/blogs/:id | Delete a blog.               |
+| GET    | /api/blogs     | Retrieve all blogs (public). |
 
 ### Admin Actions
-| Method | Endpoint                        | Description                             |
-|--------|---------------------------------|-----------------------------------------|
-| PATCH  | /api/admin/users/:userId/block  | Block a user by updating isBlocked.    |
-| DELETE | /api/admin/blogs/:id            | Delete any blog by admin.              |
+
+| Method | Endpoint                       | Description                         |
+| ------ | ------------------------------ | ----------------------------------- |
+| PATCH  | /api/admin/users/:userId/block | Block a user by updating isBlocked. |
+| DELETE | /api/admin/blogs/:id           | Delete any blog by admin.           |
 
 ---
 
